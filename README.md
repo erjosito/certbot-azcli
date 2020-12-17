@@ -1,13 +1,13 @@
 # Docker image for LetsEncrypt cert generation and import to Azure Key Vault
 
-You might have been confronted with the challenge that certificate management sometimes presents. Your website should be secure, but digital certificates can be expensive. Not only to generate, but to manage too. Luckily there are two technologies that can help you to overcome both challenges:
+You might have been confronted with the challenge that certificate management sometimes presents. Your website should be secure, but digital certificates can be expensive. Not only in terms of money, but they increase complexity. Luckily there are two technologies that can help you to overcome both challenges:
 
 - [LetsEncrypt](https://letsencrypt.org/) is a non-profit Certificate Authority (CA) that issues certificates at no cost.
 - Secret vaults such as [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/general/basic-concepts) can alleviate the overhead of certificate management: a centralized repository for your certificates, and the source where other Azure services will take their certificates from.
 
 You can automate the creation and renewal of certificates with LetsEncrypt using the [ACME](https://en.wikipedia.org/wiki/Automated_Certificate_Management_Environment) protocol. Luckily you don't need to understand anything of it, since many ACME clients exist out there that can help with this task. One of the most popular ones is [certbot](https://certbot.eff.org/), a command-line application that allows to send certificate requests to LetsEncrypt.
 
-When you run certbot to generate a digital certificate, LetsEncrypt will return a challenge to validate that the domain actually belongs to the person asking to the certificate. This challenge can be either HTTP-based (uploading a certain file in your web server) or DNS-based (creating a certain TXT record in your domain). Since we are trying to generate a certificate to put it into Azure Key Vault, potentially we don't have any web site yet. So we will take the DNS challenge. The rest of this document assumes that your domain is hosted in [Azure DNS](https://docs.microsoft.com/azure/dns/dns-overview).
+When you run certbot to generate a digital certificate, LetsEncrypt will return a challenge to validate that the domain actually belongs to your. This challenge can be either HTTP-based (uploading a certain file in your web server) or DNS-based (creating a certain TXT record in your domain). Since we are trying to generate a certificate to put it into Azure Key Vault, potentially we don't have any web site yet. So we will take the DNS challenge. The rest of this document assumes that your domain is hosted in [Azure DNS](https://docs.microsoft.com/azure/dns/dns-overview).
 
 OK, that was a lot of new terms. In short, this is the sequence of events we want to achieve:
 
